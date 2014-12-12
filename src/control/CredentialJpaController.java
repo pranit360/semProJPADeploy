@@ -27,13 +27,28 @@ import model.Credential;
 public class CredentialJpaController implements Serializable {
 
     private String persistenceFileName = "SEMESTERprojetPU";
-
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("SEMESTERprojetPU");
+    EntityManager em = emf.createEntityManager();
+    
     private Gson gson = new Gson();
 
-    public CredentialJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    private static CredentialJpaController instance=null;
+    private CredentialJpaController() {
     }
-    private EntityManagerFactory emf = null;
+
+    public static CredentialJpaController getFacade() {
+        if (instance==null) {
+            instance = new CredentialJpaController();
+        }
+        return instance;
+    }
+
+    
+    
+//    public CredentialJpaController(EntityManagerFactory emf) {
+//        this.emf = emf;
+//    }
+    //private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -103,17 +118,17 @@ public class CredentialJpaController implements Serializable {
      }
      }  */
 
-    /* public void destroy(String id) throws NonexistentEntityException {
+    public void destroy(String username) throws NonexistentEntityException {
      EntityManager em = null;
      try {
      em = getEntityManager();
      em.getTransaction().begin();
      Credential credential;
      try {
-     credential = em.getReference(Credential.class, id);
+     credential = em.getReference(Credential.class, username);
      credential.getUsername();
      } catch (EntityNotFoundException enfe) {
-     throw new NonexistentEntityException("The credential with id " + id + " no longer exists.", enfe);
+     throw new NonexistentEntityException("The credential with id " + username + " no longer exists.", enfe);
      }
      em.remove(credential);
      em.getTransaction().commit();
@@ -122,7 +137,7 @@ public class CredentialJpaController implements Serializable {
      em.close();
      }
      }
-     } */
+     } 
 
     /* public List<Credential> findCredentialEntities() {
      return findCredentialEntities(true, -1, -1);
@@ -201,3 +216,4 @@ public class CredentialJpaController implements Serializable {
     }
     
 }
+

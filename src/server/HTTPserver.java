@@ -20,11 +20,13 @@ public class HTTPserver {
 
     static int port = 9999;
     static String ip = "127.0.0.1";
-    static String publicFolder = "src/htmlFiles/";
+    
     private static final boolean DEVELOPMENT_MODE = true;
     private static EntityManagerFactory emf
             = Persistence.createEntityManagerFactory("SEMESTERprojetPU");
-    private static CredentialJpaController credentialJpaController = new CredentialJpaController(emf);
+static CredentialJpaController facade=CredentialJpaController.getFacade();
+
+    //private static CredentialJpaController credentialJpaController = new CredentialJpaController(emf);
 
     public void run() throws Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(ip, port), 0);
@@ -41,11 +43,10 @@ public class HTTPserver {
     }
 
     public static void main(String[] args) throws Exception {
-        if (args.length >= 3) {
+        if (args.length >= 2) {
             port = Integer.parseInt(args[0]);
             ip = args[1];
-            publicFolder = args[2];
-        }
+            }
         new HTTPserver().run();
     }
 
@@ -65,7 +66,7 @@ public class HTTPserver {
                             String params = path.substring(lastIndex + 1);
                             String username = params.split(",")[0];
                             String password = params.split(",")[1];
-                            response = credentialJpaController.checkCredential(username, password);
+                            response = facade.checkCredential(username, password);
                             // String jsonresponse= gson.toJson(response);
                         } else { // person                           
                             response = "Invalid request";
@@ -98,7 +99,7 @@ public class HTTPserver {
                         int lastIndex = path.lastIndexOf("/");
                         if (lastIndex > 0) {  //something exists after /
                             String username = path.substring(lastIndex + 1);
-                            response = credentialJpaController.checkACredential(username);
+                            response = facade.checkACredential(username);
                             // String jsonresponse= gson.toJson(response);
                         } else { // person                           
                             response = "Invalid request";
@@ -137,7 +138,7 @@ public class HTTPserver {
                         String jsonQuery = br.readLine();
                         System.out.println("hello: " + jsonQuery);
 
-                        cred = credentialJpaController.addCredential(jsonQuery);
+                        cred = facade.addCredential(jsonQuery);
                         System.out.println(jsonQuery);
 
                         response = gson.toJson(cred);
