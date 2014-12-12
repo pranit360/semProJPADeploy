@@ -59,25 +59,6 @@ public class BackendTests {
     }
 
 
-//    @Test
-//    public void testGetPersonAsJson(){
-//        Credential p1 = facade.addPersonFromGson(gson.toJson(new Person("bbb", "bbb", "bbb","mail.gmail.com")));
-//         Credential p2 = facade.addPersonFromGson(gson.toJson(new Person("VALA", "Mata", "23563","mail.gmail.com")));
-//         long nr =p1.getId();
-//         long nr2 =p2.getId();
-//         list.add(new Person(nr, "bbb", "bbb", "bbb","mail.gmail.com"));
-//         list.add(new Person(nr2,"VALA", "Mata", "23563","mail.gmail.com"));
-//String result = facade.getPersonsAsJSON();
-//String execute=gson.toJson(list);
-//        facade.delete(p1.getId());
-//        facade.delete(p2.getId());
-//assertEquals(execute,result);
-//    }
-//    
-//    @Test
-    public void testGetPersonWithId()throws Exception{
-     addPersonTest();
-    }
     
     
     
@@ -103,18 +84,4 @@ public class BackendTests {
     }
     
     
-    
-//    @Test
-//    public void deletePersonTest()
-//    {
-//        Credential person = facade.addPersonFromGson(gson.toJson(new Credential("bbb", "bbb", "bbb")));
-//    facade.delete(person.getId());
-//    String p =facade.getPersonAsJson(person.getId());
-//    boolean  cute = true;
-//    if(p.equals(null)){
-//        cute = false;
-//    }
-//       assertTrue(cute);
-//  
-//    }
 }
